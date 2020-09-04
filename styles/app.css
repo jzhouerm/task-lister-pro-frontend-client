@@ -1,0 +1,52 @@
+#node1
+{
+	background-color: #BAE568;
+}
+#node2
+{
+	background-color: #BAE568;
+}
+#node7
+{
+	background-color: #556C23;
+}
+#node8
+{
+	float: left;
+	width: 317px;
+	background-color: #BAE568;
+}
+#node9
+{
+	float: left;
+	width: 315px;
+	background-color: #BAE568;
+}
+#node10
+{
+	float: left;
+	width: 318px;
+	background-color: #22882B;
+}
+#node11
+{
+	float: left;
+	width: 404px;
+	background-color: #556C23;
+}
+#node12
+{
+	float: left;
+	width: 415px;
+	background-color: #BAE568;
+}
+#node13
+{
+    background-color: #8E1AD8;
+    align-items: baseline;
+}
+
+.form{
+    display: flex;
+    align-items: baseline;
+}
