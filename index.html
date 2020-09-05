@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device=width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device=width, initial-scale=1.0"> -->
     <title>Document</title>
     <link rel="stylesheet" href="styles/app.css">
 <script src="src/index.js"></script>
@@ -11,7 +11,29 @@
 <body>
     <div id="node1">node</div><!-- #node1 end -->
     <div id="node2">node</div><!-- #node2 end -->
-    <table id="node7">node</table><!-- #node7 end -->
+    <!-- <table class="week-table" id="node7" border="1">
+        <thead class='blue'>
+            <tr class='padding'>
+              <th class='padding center'>Sunday</th>
+              <th class='padding center'>Monday</th>
+              <th class='padding center'>Tuesday</th>
+              <th class='padding center'>Wednesday</th>
+              <th class='padding center'>Thursday</th>
+              <th class='padding center'>Friday</th>
+              <th class='padding center'>Saturday</th>
+ 
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <td class="sunday">0 tasks</td> 
+            <td class="monday">0 tasks</td> 
+            <td class="tuesday">0 tasks</td> 
+            <td class="wednesday">0 tasks</td> 
+            <td class="thursday">0 tasks</td> 
+            <td class="friday">0 tasks</td> 
+            <td class="saturday">0 tasks</td> 
+          </tbody>
+    </table>#node7 end -->
         <div id="node8">
             <!-- <iframe src="https://calendar.google.com/calendar/embed?height=250&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FNew_York&amp;src=bW9hOXU2czlnMGFjMG9obmIwZWtkYXUxMzhAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;color=%23616161&amp;showNav=0&amp;showPrint=0&amp;showTitle=0&amp;showTz=0&amp;showCalendars=0&amp;showDate=1&amp;mode=MONTH" style="border:solid 1px #777" width="300" height="250" frameborder="0" scrolling="no"></iframe> -->
         </div><!-- #node8 end -->
@@ -19,6 +41,55 @@
     <div id="node9">node</div><!-- #node9 end -->
     <table id="node11">node</table><!-- #node11 end -->
     <ul class="list-title" id="node10">My Tasks</ul><!-- #node10 end -->
-    <form id="node13">node</form><!-- #node13 end -->
+    <div id="node13">
+        <p style="text-align:center">
+        <button id="new-task-btn">Create New Task</button>
+        </p>
+    </div><!-- #node13 end -->
+    <div class="container">
+        <form class="add-task-form" id="task-description-form">
+          <h3>Create a new task:</h3>
+          <input
+          type="submit"
+          name="submit"
+          value="Add Task"
+          class="submit"
+        />
+        <br />
+          <input
+            type="text"
+            name="task-name"
+            value=""
+            placeholder="Enter task name..."
+            class="input-text"
+          />
+          <br />
+          <input
+            type="date"
+            name="date"
+            value=""
+            class="input-text"
+          />
+          <br />
+          <input
+            type="time"
+            name="time"
+            value=""
+            class="input-text"
+          />
+          <br />
+          <input
+            type="number"
+            name="pomodoro"
+            value=""
+            placeholder="Enter number of 🍅..."
+            class="input-text"
+          />
+          <br />
+          
+        </form>
+              <textarea rows="4" cols="50" name="task-description" form="task-description-form" placeholder="Enter description here...">
+                </textarea>
+      </div>
 </body>
 </html>
