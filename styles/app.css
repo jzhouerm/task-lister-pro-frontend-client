@@ -1,52 +1,80 @@
 #node1
 {
 	background-color: #BAE568;
+	height: 50px;
+	width: 100%;
+	margin-bottom: 50px;
 }
 #node2
 {
 	background-color: #BAE568;
+	height: 50px;
+	width: 100%;
+	margin-bottom: 50px;
 }
 #node7
 {
 	background-color: #556C23;
+	height: 50px;
+	width: 100%;
+	margin-bottom: 50px;
 }
 #node8
 {
 	float: left;
 	width: 317px;
+	height: 400px;
 	background-color: #BAE568;
+	margin-bottom: 25px;
 }
 #node9
 {
+	position: relative;
 	float: left;
-	width: 315px;
+	width: 215px;
+	height: 50px;
 	background-color: #BAE568;
+	margin-bottom: 50px;
+	margin-right: 50px;
+	margin-left: 50px;
 }
 #node10
 {
 	float: left;
-	width: 318px;
+	width: 218px;
+	height: 300px;
 	background-color: #22882B;
+	margin-bottom: 50px;
+	margin-left: 50px;
 }
 #node11
 {
-	float: left;
-	width: 404px;
+	float: right;
+	width: 202px;
+	height: 200px;
 	background-color: #556C23;
+	margin-bottom: 50px;
+	margin-top: 50px;
+	margin-left: 50px;
+	margin-right: 50px;
 }
 #node12
 {
-	float: left;
-	width: 415px;
+	position: relative;
+	float: right;
+	width: 215px;
+	height: 50px;
 	background-color: #BAE568;
+	margin-left: 50px; 
+	margin-right: 50px;
 }
 #node13
 {
+	display: flex;
+	height: 60px;
+	width: 75%;
+	margin-top: 50px;
     background-color: #8E1AD8;
-    align-items: baseline;
+    align-self: flex-end;
 }
 
-.form{
-    display: flex;
-    align-items: baseline;
-}

@@ -16,11 +16,12 @@ document.addEventListener("DOMContentLoaded", e => {
         let taskDate = task.date
         let taskPom = task.pomodoro
         let taskId = task.id
-        debugger
-            // if(){
+        let today = new Date().toISOString().split('T')[0]
+        
+            if(today === taskDate){
                 //if todays date is equal to taskDate
                 renderList(taskName, taskDesc, taskId, taskDate, taskPom)
-                // }
+                }
         }   
     }
 
