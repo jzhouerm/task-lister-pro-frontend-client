@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", e => {
     }
 
     const renderList = (taskName, taskDesc, taskId, taskDate, taskPom) => {
-        listTitleUl.innerText = `${taskDate}`
+        listTitleUl.innerText = `Tasks for the day: ${taskDate}`
         const taskLi = document.createElement("li")
         taskLi.dataset.pomodoro = taskPom
         taskLi.dataset.id = taskId
@@ -66,7 +66,6 @@ document.addEventListener("DOMContentLoaded", e => {
   
         // spaces for the first row
         // from Monday till the first day of the month
-        // * * * 1  2  3  4
         for (let i = 0; i < getDay(d); i++) {
           table += '<td></td>';
         }
@@ -118,14 +117,44 @@ document.addEventListener("DOMContentLoaded", e => {
     addBtn.addEventListener("click", () => {
         // hide & seek with the form
         addTask = !addTask;
-        if (addTask) {
+        if (addTask) {b
           taskFormContainer.style.display = "block"
         } else {
           taskFormContainer.style.display = "none"
         }
       })
-    document.addEventListener("submit", e => {
 
+    document.addEventListener("submit", e => {
+        e.preventDefault()
+        if (e.target === taskForm){
+            let taskName = document.querySelector('[name=task-name]').value
+            let taskDate = document.querySelector('[name=date]').value
+            let taskTime = document.querySelector('[name=time]').value
+            let taskPom = parseInt(document.querySelector('[name=pomodoro]').value)
+            let taskDesc = document.querySelector('textarea').value
+
+            const taskObj = {
+            taskname: taskName,
+            description: taskDesc,
+            status: false,
+            pomodoro: taskPom,   //returning as null
+            date: taskDate,
+            time: taskTime,
+            user_id: 4
+            }
+
+            const configObj = {
+               method: "POST",
+               headers: {
+                 "content-type": "application/json",
+                 "accept": "application/json"
+               },
+               body: JSON.stringify(taskObj)
+            } 
+
+                fetch(taskUrl, configObj)
+                .then(response => response.json())
+        }
     })
 
 //invoke functions
