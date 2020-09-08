@@ -12,12 +12,28 @@
 	width: 100%;
 	margin-bottom: 50px;
 }
-#node7
+/* #node7
 {
 	background-color: #556C23;
 	height: 50px;
 	width: 100%;
 	margin-bottom: 50px;
+<<<<<<< HEAD
+} */
+#parent
+{
+	display: flex;
+
+}
+#parentCal 
+{
+	width: 35%;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: space-around;
+=======
+>>>>>>> 44bc4cc31e6fb280bc87cbfe0c4678d282f6b438
 }
 #node8
 {
