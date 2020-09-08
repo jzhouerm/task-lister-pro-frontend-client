@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", e => {
+    let addTask = false;
+
     const taskUrl = "http://localhost:3000/tasks/"
     const userUrl = "http://localhost:3000/users/1"
     const taskForm = document.querySelector(".add-task-form") //reset form
@@ -7,6 +9,7 @@ document.addEventListener("DOMContentLoaded", e => {
     const listTitleUl = document.querySelector(".list-title")
     const weekTable = document.querySelector(".week-table")
     const calendarDiv = document.querySelector("#node8")
+    const monthH1 = document.createElement("h1")    //create a node on index.html instead
 
     const getTasks = () => {
         fetch(taskUrl)
@@ -15,6 +18,9 @@ document.addEventListener("DOMContentLoaded", e => {
     }
     
     const renderTasks = (tasks) => {
+        monthH1.innerText = "September 2020"
+        calendarDiv.append(monthH1)
+        // console.log(tasks)
         for (task of tasks){
         let taskDesc = task.description
         let taskName = task.taskname
@@ -22,38 +28,43 @@ document.addEventListener("DOMContentLoaded", e => {
         let taskPom = task.pomodoro
         let taskId = task.id
         let today = new Date().toISOString().split('T')[0]
+        // console.log(today)
+        // console.log(taskDate)
         //if a click on the calendar is triggered, overwrite the list with the date selected
             if(today === taskDate){
             renderList(taskName, taskDesc, taskId, taskDate, taskPom)
-            break;
             } 
         }   
     }
 
     const renderCalendarTasks = (tasks, date) => {
         //find the date selected and render tasks
-        for (task of tasks){
-        let taskDesc = task.description
-        let taskName = task.taskname
-        let taskDate = task.date
-        let taskPom = task.pomodoro
-        let taskId = task.id
-        let clickedDate = `2020-09-${date}`
-        let formattedDate = new Date(clickedDate).toISOString().split('T')[0]
-            if(formattedDate === taskDate){
-                renderList(taskName, taskDesc, taskId, taskDate, taskPom)
-                break;
-                } 
-        }   
+
+        //tasks.filter then forEach (map in react)
+        tasks.forEach(task => {
+          let clickedDate = `2020-09-${date}`
+          let formattedDate = new Date(clickedDate).toISOString().split('T')[0]
+          let taskDate = task.date
+          if(formattedDate === taskDate){
+
+            let taskDesc = task.description
+            let taskName = task.taskname
+            let taskPom = task.pomodoro
+            let taskId = task.id
+            renderList(taskName, taskDesc, taskId, taskDate, taskPom)
+             } 
+        })   
     }
 
     const renderList = (taskName, taskDesc, taskId, taskDate, taskPom) => {
-        listTitleUl.innerText = `Tasks for the day: ${taskDate}`
+
+        // listTitleUl.innerText = `Tasks for the day: ${taskDate}`
         const taskLi = document.createElement("li")
         taskLi.dataset.pomodoro = taskPom
         taskLi.dataset.id = taskId
-        taskLi.innerText = `${taskName} - ${taskDesc}`
-        listTitleUl.append(taskLi)
+        taskLi.innerText = `${taskName} - ${taskDesc} (${taskPom} Pomodoro)`
+        listTitleUl.appendChild(taskLi)
+        console.log(listTitleUl)
     }
 
 //Calendar >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -113,14 +124,13 @@ document.addEventListener("DOMContentLoaded", e => {
         }
     })
 
-    let addTask = false;
     addBtn.addEventListener("click", () => {
         // hide & seek with the form
         addTask = !addTask;
-        if (addTask) {b
-          taskFormContainer.style.display = "block"
-        } else {
+        if (addTask) {
           taskFormContainer.style.display = "none"
+        } else {
+          taskFormContainer.style.display = "block"
         }
       })
 
@@ -137,7 +147,7 @@ document.addEventListener("DOMContentLoaded", e => {
             taskname: taskName,
             description: taskDesc,
             status: false,
-            pomodoro: taskPom,   //returning as null
+            pomodoro: taskPom, 
             date: taskDate,
             time: taskTime,
             user_id: 4
@@ -151,9 +161,9 @@ document.addEventListener("DOMContentLoaded", e => {
                },
                body: JSON.stringify(taskObj)
             } 
-
                 fetch(taskUrl, configObj)
                 .then(response => response.json())
+                // .then(data => )
         }
     })
 
