@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device=width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device=width, initial-scale=1.0"> -->
     <title>Document</title>
     <link rel="stylesheet" href="styles/app.css">
 <script src="src/index.js"></script>
@@ -11,48 +11,50 @@
     <div id="node1">Header</div><!-- #node1 end -->
     <div id="node2">User Info</div><!-- #node2 end -->
     <!-- <table id="node7">Week</table>#node7 end -->
-    <div id="parent">
-      <!-- <div id="parentCal">  -->
-        
-  
-      <!-- </div> parentCal node end -->
-      <div id="parentEles"> 
-        <div id="calMonth"><h3 class="current-month" align="center">September 2020</h3></div>
-        <div id="node8"> Calendar
-        </div><!-- #node8 end -->
-    <div id="node12">
-      <h3 align="center">Last 7 Days</h3>
-    </div><!-- #node12 end -->
-    <div id="node9">
-      <h3 class="taskheader" align="center"></h3>
-    </div><!-- #node9 end -->
-    <div id="node11">
-      <table class="chart" border="1" width="400">
-        <!-- <thead class='blue'> -->
-          <tr class='padding'>
-            <th class='padding center'>Day</th>
-            <th class='padding center'>Pomodoros Completed</th>
-          </tr>
-        <!-- </thead> -->
-        <tbody id="table-body">
-          <tr><th class="day">Day 1</th><th class='pom' align='left'></th> </tr>
-          <tr><th class="day">Day 2</th><th class='pom' align='left'></th> </tr>
-          <tr><th class="day">Day 3</th><th class='pom' align='left'></th> </tr>
-          <tr><th class="day">Day 4</th><th class='pom' align='left'></th> </tr>
-          <tr><th class="day">Day 5</th><th class='pom' align='left'></th> </tr>
-          <tr><th class="day">Day 6</th><th class='pom' align='left'></th> </tr>
-          <tr><th class="day">Day 7</th><th class='pom' align='left'></th> </tr>
-        </tbody>
-      </table>
-    </div><!-- #node11 end -->
-    <ul class="list-title" id="node10"></ul><!-- #node10 end -->
-  </div> <!--parent end-->
+    <div id="parent-timer">
+       <h3 class="timer-name" align="left"></h3>
+    </div>
+
+    <div id   ="parent">
+            <div id="parentEles"> 
+              <div id="calMonth"><h3 class="current-month" align="center">September 2020</h3></div>
+              <div id="node8"> Calendar
+              </div><!-- #node8 end -->
+          <div id="node12">
+            <h3 align="center">Last 7 Days</h3>
+          </div><!-- #node12 end -->
+          <div id="node9">
+            <h3 class="taskheader" align="center"></h3>
+          </div><!-- #node9 end -->
+          <div id="node11">
+            <table class="chart" border="1" width="400">
+              <!-- <thead class='blue'> -->
+                <tr class='padding'>
+                  <th class='padding center'>Day</th>
+                  <th class='padding center'>Pomodoros Completed</th>
+                </tr>
+              <!-- </thead> -->
+              <tbody id="table-body">
+                <tr><th class="day">Day 1</th><th class='pom' align='left'></th> </tr>
+                <tr><th class="day">Day 2</th><th class='pom' align='left'></th> </tr>
+                <tr><th class="day">Day 3</th><th class='pom' align='left'></th> </tr>
+                <tr><th class="day">Day 4</th><th class='pom' align='left'></th> </tr>
+                <tr><th class="day">Day 5</th><th class='pom' align='left'></th> </tr>
+                <tr><th class="day">Day 6</th><th class='pom' align='left'></th> </tr>
+                <tr><th class="day">Day 7</th><th class='pom' align='left'></th> </tr>
+              </tbody>
+            </table>
+          </div><!-- #node11 end -->
+          <ul class="list-title" id="node10"></ul><!-- #node10 end -->
+   </div> <!--parent end-->
+
    </div>  <!-- parentEles end -->
     <div id="node13">
-      <p style="text-align:center">
-      <button id="new-task-btn">Create New Task</button>
-      </p>
-  </div><!-- #node13 end -->
+        <p style="text-align:center">
+          <button id="new-task-btn">Create New Task</button>
+        </p>
+    </div><!-- #node13 end -->
+
 <div class="container">
     <form class="add-task-form" id="task-description-form">
       <h3>Create a new task:</h3>
@@ -97,7 +99,7 @@
     </form>
           <textarea rows="4" cols="50" name="task-description" form="task-description-form" placeholder="Enter description here...">
             </textarea>
-  </div>
- 
+  </div> <!-- form container end -->
+
 </body>
 </html>
