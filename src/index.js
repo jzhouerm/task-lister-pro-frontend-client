@@ -4,34 +4,37 @@ document.addEventListener("DOMContentLoaded", e => {
     const taskUrl = "http://localhost:3000/tasks/"
     const userUrl = "http://localhost:3000/users/1"
     const taskForm = document.querySelector(".add-task-form") //reset form
-    const addBtn = document.querySelector("#new-task-btn");
+    const addBtn = document.querySelector("#new-task-btn")
     const taskFormContainer = document.querySelector(".container");
     const listTitleUl = document.querySelector(".list-title")
     const weekTable = document.querySelector(".week-table")
     const calendarDiv = document.querySelector("#node8")
     const monthH1 = document.createElement("h1")    //create a node on index.html instead
+    const taskHeader = document.querySelector(".taskheader")
+    const parentDiv = document.querySelector("#parent")
 
     const getTasks = () => {
         fetch(taskUrl)
         .then(response => response.json())
-        .then(tasks => renderTasks(tasks))
+        .then(tasks => initialRenderTasks(tasks))
     }
     
-    const renderTasks = (tasks) => {
-        monthH1.innerText = "September 2020"
-        calendarDiv.append(monthH1)
+    const initialRenderTasks = (tasks) => {
+        renderTable(tasks)
         // console.log(tasks)
         for (task of tasks){
-        let taskDesc = task.description
-        let taskName = task.taskname
-        let taskDate = task.date
-        let taskPom = task.pomodoro
-        let taskId = task.id
-        let today = new Date().toISOString().split('T')[0]
-        // console.log(today)
-        // console.log(taskDate)
-        //if a click on the calendar is triggered, overwrite the list with the date selected
-            if(today === taskDate){
+          let taskDesc = task.description
+          let taskName = task.taskname
+          let taskDate = task.date
+          let taskPom = task.pomodoro
+          let taskId = task.id
+          // let today = new Date().toISOString().split('T')[0]
+          let today = createDate(0)
+          let formattedDate = new Date(today).toISOString().split('T')[0]
+          // debugger
+          taskHeader.innerText = `Tasks for the day: ${taskDate}`
+          // debugger
+            if(formattedDate === taskDate){
             renderList(taskName, taskDesc, taskId, taskDate, taskPom)
             } 
         }   
@@ -39,7 +42,7 @@ document.addEventListener("DOMContentLoaded", e => {
 
     const renderCalendarTasks = (tasks, date) => {
         //find the date selected and render tasks
-
+        listTitleUl.innerHTML = ""
         //tasks.filter then forEach (map in react)
         tasks.forEach(task => {
           let clickedDate = `2020-09-${date}`
@@ -47,6 +50,7 @@ document.addEventListener("DOMContentLoaded", e => {
           let taskDate = task.date
           if(formattedDate === taskDate){
 
+            taskHeader.innerText = `Tasks for the day: ${taskDate}`
             let taskDesc = task.description
             let taskName = task.taskname
             let taskPom = task.pomodoro
@@ -57,23 +61,66 @@ document.addEventListener("DOMContentLoaded", e => {
     }
 
     const renderList = (taskName, taskDesc, taskId, taskDate, taskPom) => {
-
-        // listTitleUl.innerText = `Tasks for the day: ${taskDate}`
         const taskLi = document.createElement("li")
+        taskLi.className = "taskli"
         taskLi.dataset.pomodoro = taskPom
         taskLi.dataset.id = taskId
         taskLi.innerText = `${taskName} - ${taskDesc} (${taskPom} Pomodoro)`
         listTitleUl.appendChild(taskLi)
-        console.log(listTitleUl)
     }
 
+    const renderTable = (tasks) => {
+      document.querySelectorAll('.day')[0].innerText = createDate(-1)
+      document.querySelectorAll('.day')[1].innerText = createDate(-2)
+      document.querySelectorAll('.day')[2].innerText = createDate(-3)
+      document.querySelectorAll('.day')[3].innerText = createDate(-4)
+      document.querySelectorAll('.day')[4].innerText = createDate(-5)
+      document.querySelectorAll('.day')[5].innerText = createDate(-6)
+      document.querySelectorAll('.day')[6].innerText = createDate(-7)
+
+      
+
+        document.querySelectorAll(".day").forEach( day => {
+          let date = day.innerText
+          let formattedDate = new Date(date).toISOString().split('T')[0]
+          let sum = 0
+          for (task of tasks){
+
+            let taskDate = task.date
+            let taskPom = task.pomodoro
+            let taskStatus = task.status
+
+            if (formattedDate === taskDate && taskStatus === true){
+              
+              sum += parseInt(taskPom)
+
+              //sum = sum of taskPom for date with true status
+              //"🍅".repeat(3)
+              //document.querySelectorAll('.day')[0].nextElementSibling
+            }
+          }
+          day.nextElementSibling.innerText = "🍅".repeat(sum)
+      })
+    }
+    // "🍅".repeat(2)
+
+    const createDate = (daysToAdd) => {
+      let today = new Date()
+      today.setDate(today.getDate() + daysToAdd)
+      let dd = today.getDate()
+      let mm = today.getMonth() + 1
+      let y = today.getFullYear()
+
+      let someFormattedDate = y + '-'+ mm + '-'+ dd;
+      return someFormattedDate
+    }
 //Calendar >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     function createCalendar(elem, year, month) {
 
         let mon = month - 1; // months in JS are 0..11, not 1..12
         let d = new Date(year, mon);
   
-        let table = '<table class="calendar" border="1"><tr><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th><th>SU</th></tr><tr>';
+        let table = '<table align="center" class="calendar" width="400" height="250" border="1"><tr><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th><th>SU</th></tr><tr>';
   
         // spaces for the first row
         // from Monday till the first day of the month
@@ -83,7 +130,7 @@ document.addEventListener("DOMContentLoaded", e => {
   
         // <td> with actual dates
         while (d.getMonth() == mon) {
-          table += '<td class="calendar-date">' + d.getDate() + '</td>';
+          table += '<td class="calendar-date" align="center">' + d.getDate() + '</td>';
   
           if (getDay(d) % 7 == 6) { // sunday, last day of week - newline
             table += '</tr><tr>';
@@ -114,13 +161,16 @@ document.addEventListener("DOMContentLoaded", e => {
 
 //Event listeners >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
    document.addEventListener("click", e => {
-        if(e.target.className === ("calendar-date")){
+        if(e.target.className === "calendar-date"){
 
             let clickedDate = e.target.innerText
             
             fetch(taskUrl)
             .then(response => response.json())
             .then(tasks => renderCalendarTasks(tasks, clickedDate))
+        }
+        if(e.target.className === "taskli"){
+          parentDiv.innerHTML = ""
         }
     })
 

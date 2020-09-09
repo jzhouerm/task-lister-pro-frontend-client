@@ -21,7 +21,17 @@
 } */
 #parent
 {
-	display: flex;
+	display: grid;
+	grid-template-columns: 25% 25% 25% 25%;
+	grid-template-rows: 25% 25% 25% 25%;
+	grid-template-areas: 
+	"calendar TaskName last7D btn"
+	"MyTasks productivity form";
+	gap: 50px;
+	width: 65%;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-content: center;
 
 }
 /* #parentCal 
@@ -30,75 +40,67 @@
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
-	justify-content: center;
-	align-items: center;
+	justify-content: space-around;
 } */
-#parentEles
+#node8
 {
-	margin-left: auto;
-	margin-right: auto;
+	grid-area: calendar;
+	width: 317px;
+	height: 600px;
+	background-color: #BAE568;
+	margin-bottom: 25px;
+}
+/* #parentEles
+{
 	display: grid;
-	grid-template-columns: 400px 400px 400px;
+	grid-template-columns: 50% 50% 50% 1%;
 	grid-template-rows: 50px 300px;
 	grid-template-areas: 
-	"calMonth TaskName last7D"
-	"calendar MyTasks productivity"
+	"TaskName last7D btn"
+	"MyTasks productivity form"
 	;
 	gap: 25px;
 	width: 65%;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-content: center;
-}
-#calMonth
-{
-	grid-area: calMonth;
-	position: relative;
-	
-	background-color: #BAE568;
-	margin-bottom: 50px;
-}
-#node8
-{
-	grid-area: calendar;
-	width: 400px;
-	height: 300px;
-	background-color: #BAE568;
-	margin-bottom: 25px;
-}
+} */
 #node9
 {
 	grid-area: TaskName; 
 	position: relative;
-	/* background-color: #BAE568; */
+	background-color: #BAE568;
 	height: 50px;
 }
 #node10
 {
 	grid-area: MyTasks;
 	height: 300px;
-	background-color: #BAE568;
+	background-color: #22882B;
 	align-self: center;
 }
 #node11
 {
 	grid-area: productivity;
 	height: 300px;
-	background-color: #BAE568;
+	background-color: #556C23;
 }
 #node12
 {
 	grid-area: last7D;
 	position: relative;
 	height: 50px;
-	/* background-color: #BAE568; */
+	background-color: #BAE568;
 }
 #node13
 {
-	display: flex;
+	grid-area: btn;
 	height: 60px;
 	width: 75%;
-	margin-top: 25px;
-    background-color: #22882B;
-    align-self: flex-end;
+	margin-top: 50px;
+    background-color: #8E1AD8;
+}
+.container
+{
+	grid-area: form;
 }
