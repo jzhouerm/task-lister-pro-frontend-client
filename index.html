@@ -7,12 +7,23 @@
     <link rel="stylesheet" href="styles/app.css">
 <script src="src/index.js"></script>
 </head>
-<body>
-    <div id="node1">Header</div><!-- #node1 end -->
-    <div id="node2">User Info</div><!-- #node2 end -->
+<body id="full-page">
+    <!-- <div id="node1"> -->
+          <div id="node1" class="wrapper">
+            <div class="focus">
+              TASK LISTER PRO X
+            </div>
+            <div class="mask">
+              <div class="text">FOCUS</div>
+            </div>
+          </div>
+    <!-- </div>#node1 end -->
+
+    <div id="node2">Welcome Back Jules!</div><!-- #node2 end -->
     <!-- <table id="node7">Week</table>#node7 end -->
     <div id="parent-timer">
        <h3 class="timer-name" align="left"></h3>
+       <h4 class="timer-description"></h4>
     </div>
 
     <div id   ="parent">
@@ -50,8 +61,8 @@
 
    </div>  <!-- parentEles end -->
     <div id="node13">
-        <p style="text-align:center">
-          <button id="new-task-btn">Create New Task</button>
+        <p align="center">
+          <button align="center" id="new-task-btn">Create New Task</button>
         </p>
     </div><!-- #node13 end -->
 
@@ -101,5 +112,6 @@
             </textarea>
   </div> <!-- form container end -->
 
+  
 </body>
 </html>
