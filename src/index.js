@@ -8,14 +8,15 @@ document.addEventListener("DOMContentLoaded", e => {
     const taskFormContainer = document.querySelector(".container");
     taskFormContainer.style.display = "none"
     const listTitleUl = document.querySelector(".list-title")
-    const weekTable = document.querySelector(".week-table")
     const calendarDiv = document.querySelector("#node8")
-    const monthH1 = document.createElement("h1")    //create a node on index.html instead
     const taskHeader = document.querySelector(".taskheader")
     const parentDiv = document.querySelector("#parent")
     const parentTimerDiv = document.querySelector("#parent-timer")
     const timerName = document.querySelector('.timer-name')
+    const timerDesc = document.querySelector(".timer-description")
     const createTaskDiv = document.getElementById("node13")
+    // const welcomeing = document.getElementById("node2")
+    // welcomeing.textContent = `Welcome back ${}`
 
     const getTasks = () => {
         fetch(taskUrl)
@@ -71,7 +72,8 @@ document.addEventListener("DOMContentLoaded", e => {
         taskLi.dataset.pomodoro = taskPom
         taskLi.dataset.id = taskId
         taskLi.dataset.status = taskStatus
-        taskLi.innerText = `${taskName} - ${taskDesc} (${taskPom} Pomodoro)`
+        taskLi.dataset.description = taskDesc
+        taskLi.innerText = `${taskName} - ${taskDesc} (${taskPom} 🍅)`
         if (taskLi.dataset.status === "true") {
           // debugger
           let text = taskLi.textContent
@@ -100,17 +102,12 @@ document.addEventListener("DOMContentLoaded", e => {
             let taskStatus = task.status
 
             if (formattedDate === taskDate && taskStatus === true){
-              
               sum += parseInt(taskPom)
-
-              //sum = sum of taskPom for date with true status
-              //"🍅".repeat(3)
-              //document.querySelectorAll('.day')[0].nextElementSibling
-               // "🍅".repeat(2)
             }
           }
           day.nextElementSibling.innerText = "🍅".repeat(sum)
       })
+
     }
 
     const createDate = (daysToAdd) => {
@@ -124,119 +121,95 @@ document.addEventListener("DOMContentLoaded", e => {
       return someFormattedDate
     }
 // Focus Mode >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-const FULL_DASH_ARRAY = 283;
-const WARNING_THRESHOLD = 10;
-const ALERT_THRESHOLD = 5;
+    const FULL_DASH_ARRAY = 283;
+    const WARNING_THRESHOLD = 10;
+    const ALERT_THRESHOLD = 5;
 
-const COLOR_CODES = {
-  info: {
-    color: "green"
-  },
-  warning: {
-    color: "orange",
-    threshold: WARNING_THRESHOLD
-  },
-  alert: {
-    color: "red",
-    threshold: ALERT_THRESHOLD
-  }
-};
+    const COLOR_CODES = {
+      info: {
+        color: "green"
+      },
+      warning: {
+        color: "orange",
+        threshold: WARNING_THRESHOLD
+      },
+      alert: {
+        color: "red",
+        threshold: ALERT_THRESHOLD
+      }
+    };
 
-const TIME_LIMIT = 1500;
-let timePassed = 0;
-let timeLeft = TIME_LIMIT;
-let timerInterval = null;
-let remainingPathColor = COLOR_CODES.info.color;
+    const TIME_LIMIT = 1500; 
+    let timePassed = 0;
+    let timeLeft = TIME_LIMIT;
+    let timerInterval = null;
+    let remainingPathColor = COLOR_CODES.info.color;
 
-const formatTime = (time) => {
-  const minutes = Math.floor(time / 60);
-  let seconds = time % 60;
+    const formatTime = (time) => {
+      const minutes = Math.floor(time / 60);
+      let seconds = time % 60;
 
-  if (seconds < 10) {
-    seconds = `0${seconds}`;
-  }
+      if (seconds < 10) {
+        seconds = `0${seconds}`;
+      }
 
-  return `${minutes}:${seconds}`;
-}
-
-const onTimesUp = () => {
-  clearInterval(timerInterval);
-}
-
-const startTimer = (taskId, taskPom, taskName) => {
-  timerName.textContent = `${taskName}`
-  timerInterval = setInterval(() => {
-    timePassed = timePassed += 1;
-    timeLeft = TIME_LIMIT - timePassed;
-    document.getElementById("base-timer-label").innerHTML = formatTime(
-      timeLeft
-    );
-    setCircleDasharray();
-    setRemainingPathColor(timeLeft);
-
-    if (timeLeft === 0) {
-      onTimesUp();
+      return `${minutes}:${seconds}`;
     }
-  }, 1000);
-}
 
-const setRemainingPathColor = (timeLeft) => {
-  const { alert, warning, info } = COLOR_CODES;
-  if (timeLeft <= alert.threshold) {
-    document
-      .getElementById("base-timer-path-remaining")
-      .classList.remove(warning.color);
-    document
-      .getElementById("base-timer-path-remaining")
-      .classList.add(alert.color);
-  } else if (timeLeft <= warning.threshold) {
-    document
-      .getElementById("base-timer-path-remaining")
-      .classList.remove(info.color);
-    document
-      .getElementById("base-timer-path-remaining")
-      .classList.add(warning.color);
-  }
-}
+    const onTimesUp = () => {
+      clearInterval(timerInterval);
+    }
 
-const calculateTimeFraction = () => {
-  const rawTimeFraction = timeLeft / TIME_LIMIT;
-  return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
-}
+    const startTimer = (taskId, taskPom, taskName) => {
+      timerName.textContent = `${taskName}`
+      timerInterval = setInterval(() => {
+        timePassed = timePassed += 1;
+        timeLeft = TIME_LIMIT - timePassed;
+        document.getElementById("base-timer-label").innerHTML = formatTime(
+          timeLeft
+        );
+        setCircleDasharray();
+        setRemainingPathColor(timeLeft);
 
-const setCircleDasharray = () => {
-  const circleDasharray = `${(
-    calculateTimeFraction() * FULL_DASH_ARRAY
-  ).toFixed(0)} 283`;
-  document
-    .getElementById("base-timer-path-remaining")
-    .setAttribute("stroke-dasharray", circleDasharray);
-}
-// document.getElementById("app").innerHTML = `
-// <div class="base-timer">
-//   <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-//     <g class="base-timer__circle">
-//       <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
-//       <path
-//         id="base-timer-path-remaining"
-//         stroke-dasharray="283"
-//         class="base-timer__path-remaining ${remainingPathColor}"
-//         d="
-//           M 50, 50
-//           m -45, 0
-//           a 45,45 0 1,0 90,0
-//           a 45,45 0 1,0 -90,0
-//         "
-//       ></path>
-//     </g>
-//   </svg>
-//   <span id="base-timer-label" class="base-timer__label">${formatTime(
-//     timeLeft
-//   )}</span>
-// </div>
-// `;
+        if (timeLeft === 0) {
+          onTimesUp();
+        }
+      }, 1000);
+    }
 
-// startTimer();
+    const setRemainingPathColor = (timeLeft) => {
+      const { alert, warning, info } = COLOR_CODES;
+      if (timeLeft <= alert.threshold) {
+        document
+          .getElementById("base-timer-path-remaining")
+          .classList.remove(warning.color);
+        document
+          .getElementById("base-timer-path-remaining")
+          .classList.add(alert.color);
+      } else if (timeLeft <= warning.threshold) {
+        document
+          .getElementById("base-timer-path-remaining")
+          .classList.remove(info.color);
+        document
+          .getElementById("base-timer-path-remaining")
+          .classList.add(warning.color);
+      }
+    }
+
+    const calculateTimeFraction = () => {
+      const rawTimeFraction = timeLeft / TIME_LIMIT;
+      return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+    }
+
+    const setCircleDasharray = () => {
+      const circleDasharray = `${(
+        calculateTimeFraction() * FULL_DASH_ARRAY
+      ).toFixed(0)} 283`;
+      document
+        .getElementById("base-timer-path-remaining")
+        .setAttribute("stroke-dasharray", circleDasharray);
+    }
+
 //Calendar >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     function createCalendar(elem, year, month) {
 
@@ -276,11 +249,11 @@ const setCircleDasharray = () => {
         elem.innerHTML = table;
       }
   
-      function getDay(date) { // get day number from 0 (monday) to 6 (sunday)
+    function getDay(date) { // get day number from 0 (monday) to 6 (sunday)
         let day = date.getDay();
         if (day == 0) day = 7; // make Sunday (0) the last day
         return day - 1;
-      }
+    }
 
 //Event listeners >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
    document.addEventListener("click", e => {
@@ -294,8 +267,8 @@ const setCircleDasharray = () => {
             .then(tasks => renderCalendarTasks(tasks, clickedDate))
         }
         if(e.target.className === "taskli" && e.target.dataset.status === "false"){
-
-          // parentDiv.innerHTML = ""
+          timerName.textContent = "Current Task:"
+          timerDesc.textContent = ` • ${e.target.textContent}`                       
           parentDiv.style.display = "none"
           const appDiv = document.createElement("div")
           appDiv.className = "app"
@@ -324,10 +297,7 @@ const setCircleDasharray = () => {
             </div>
             `;
 
-          // let btn = document.getElementById("node13")
           createTaskDiv.style.display = "none"
-          // let formCont = document.querySelector('.container')
-          // formCont.style.display = "none"
           let taskId = e.target.dataset.id
           let taskPom = e.target.dataset.pomodoro
           let taskName = e.target.textContent
@@ -347,9 +317,9 @@ const setCircleDasharray = () => {
           completedBtn.dataset.status = taskStatus
           baseTimer.append(completedBtn)
           
-          // renderFocusMode(taskId, taskPom, taskName)
         }
           if (e.target === document.querySelector(".start-btn")){
+
             let taskId = e.target.dataset.id
             let taskPom = e.target.dataset.pom
             let taskName = e.target.name
@@ -419,7 +389,10 @@ const setCircleDasharray = () => {
             }  
                 fetch(taskUrl, configObj)
                 .then(response => response.json())
-                // .then(data => )
+                .then(data => {
+                  getTasks()
+                  taskForm.reset()
+                })
         }
     })
 
@@ -429,3 +402,18 @@ createCalendar(calendarDiv, 2020, 9);
 
 
 })//end of DOMContentLoaded
+
+/*
+To-do:
+
+- fix the timer to reflect number of pomodoros
+- fix the calendar to view different months
+-fix the time so it stops at 0:
+- Logo/title (CSS)
+- Nav bar
+- hover effect
+- add new task to iCal
+- buttons/fonts
+-format form
+
+*/
