@@ -121,10 +121,10 @@ document.addEventListener("DOMContentLoaded", e => {
       return someFormattedDate
     }
 
-    const pomTimeConverter = (PomNumber) => {
-    let x = PomNumber * 1500
-    return x
-    }
+    // const pomTimeConverter = (PomNumber) => {
+    // let x = PomNumber * 1500
+    // return x
+    // }
 // Focus Mode >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     const FULL_DASH_ARRAY = 283;
     const WARNING_THRESHOLD = 10;
@@ -144,8 +144,8 @@ document.addEventListener("DOMContentLoaded", e => {
       }
     };
     //upon click on taskLi, the time is set to taskpom * 1500
-    // const TIME_LIMIT = 1500; 
-    let TIME_LIMIT = pomTimeConverter; 
+    const TIME_LIMIT = 1500; 
+    // let TIME_LIMIT = pomTimeConverter; 
     let timePassed = 0;
     let timeLeft = TIME_LIMIT;
     let timerInterval = null;
@@ -414,12 +414,9 @@ To-do:
 
 - fix the timer to reflect number of pomodoros
 - fix the calendar to view different months
--fix the time so it stops at 0:
 - Logo/title (CSS)
-- Nav bar
 - hover effect
 - add new task to iCal
-- buttons/fonts
 -format form
 
 */

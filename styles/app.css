@@ -70,6 +70,10 @@
 	background-color: #fff;
 	margin-bottom: 50px;
 }
+#calMonth:hover
+{
+	opacity: 1.0;
+}
 #node8
 {
 	grid-area: calendar;
