@@ -10,6 +10,8 @@
 #full-page
 {
 	padding: 10px;
+	background-image: url("https://images.unsplash.com/photo-1598540892016-58697e3ebd1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=478&q=80");
+	background-repeat: no-repeat;
 }
 #node2
 {
@@ -29,6 +31,9 @@
 #parent
 {
 	display: flex;
+	background-color: #fff;
+	opacity: 0.7;
+	border-radius: 15px;
 
 }
 /* #parentCal 
@@ -62,7 +67,7 @@
 	grid-area: calMonth;
 	position: relative;
 	
-	background-color: #BAE568;
+	background-color: #fff;
 	margin-bottom: 50px;
 }
 #node8
@@ -70,7 +75,7 @@
 	grid-area: calendar;
 	width: 400px;
 	height: 300px;
-	background-color: #BAE568;
+	background-color: #fff;
 	margin-bottom: 25px;
 	border-radius: 15px;
 	opacity: 0.6;
@@ -86,7 +91,7 @@
 {
 	grid-area: MyTasks;
 	height: 300px;
-	background-color: #BAE568;
+	background-color: #fff;
 	align-self: center;
 	border-radius: 15px;
 	opacity: 0.6;
@@ -95,7 +100,7 @@
 {
 	grid-area: productivity;
 	height: 300px;
-	background-color: #BAE568;
+	background-color: #fff;
 	border-radius: 15px;
 	opacity: 0.6;
 }
@@ -113,8 +118,7 @@
 	width: 60%;
 	margin-left: 250px;
 	margin-right: 200px;
-	margin-top: 25px;
-    background-color:#72b565;      
+	margin-top: 25px;     
 	align-self: flex-end;
 	justify-content: center;
 }
@@ -182,7 +186,28 @@
 	justify-content: center;
 	font-size: 48px;
   }
-
+  #new-task-btn {
+	border: 0 solid;
+	box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
+	outline: 0.2px solid;
+	outline-color: rgba(255, 255, 255, 0.5);
+	outline-offset: 0px;
+	text-shadow: none;
+	transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+	width: 100px;
+	height: 50px;
+	border-radius: 5px;
+  }
+  #new-task-btn:hover{
+	border: 1px solid;
+	box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+	outline-color: rgba(255, 255, 255, 0);
+	outline-offset: 15px;
+	text-shadow: 0.5px 0.5px 1px #427388;
+	width: 100px;
+	height: 50px;
+	border-radius: 5px;
+  }
   /*
   FOCUS LOGO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   */
