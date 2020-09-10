@@ -120,6 +120,11 @@ document.addEventListener("DOMContentLoaded", e => {
       let someFormattedDate = y + '-'+ mm + '-'+ dd;
       return someFormattedDate
     }
+
+    const pomTimeConverter = (PomNumber) => {
+    let x = PomNumber * 1500
+    return x
+    }
 // Focus Mode >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     const FULL_DASH_ARRAY = 283;
     const WARNING_THRESHOLD = 10;
@@ -138,8 +143,9 @@ document.addEventListener("DOMContentLoaded", e => {
         threshold: ALERT_THRESHOLD
       }
     };
-
-    const TIME_LIMIT = 1500; 
+    //upon click on taskLi, the time is set to taskpom * 1500
+    // const TIME_LIMIT = 1500; 
+    let TIME_LIMIT = pomTimeConverter; 
     let timePassed = 0;
     let timeLeft = TIME_LIMIT;
     let timerInterval = null;
