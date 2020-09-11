@@ -15,14 +15,6 @@ document.addEventListener("DOMContentLoaded", e => {
     const timerName = document.querySelector('.timer-name')
     const timerDesc = document.querySelector(".timer-description")
     const createTaskDiv = document.getElementById("node13")
-    const overlay = document.querySelector("#overlay")
-    const loginForm = document.querySelector("#login-form")
-    let USERNAME;
-    const welcomeDiv = document.getElementById("node2")
-    // welcomeing.textContent = `Welcome back ${}`
-
-    //on submit
-    
 
     const getTasks = () => {
         fetch(taskUrl)
@@ -34,52 +26,38 @@ document.addEventListener("DOMContentLoaded", e => {
         renderTable(tasks)
         listTitleUl.innerHTML = ""
         for (task of tasks){
-          let taskDesc = task.description
-          let taskName = task.taskname
-          let taskDate = task.date
-          let taskPom = task.pomodoro
-          let taskId = task.id
-          let taskStatus = task.status
-          // let today = new Date().toISOString().split('T')[0]
           let today = createDate(0)
           let formattedDate = new Date(today).toISOString().split('T')[0]
           taskHeader.innerText = `Tasks for the day: ${formattedDate}`
             if(formattedDate === taskDate){
-            renderList(taskName, taskDesc, taskId, taskDate, taskPom, taskStatus)
+            renderList(task)
             } 
         }   
     }
 
     const renderCalendarTasks = (tasks, date) => {
-        //find the date selected and render tasks
-        listTitleUl.innerHTML = ""
-        //tasks.filter then forEach (map in react)
+        listTitleUl.innerHTML = ""   
         tasks.forEach(task => {
           let clickedDate = `2020-09-${date}`
           let formattedDate = new Date(clickedDate).toISOString().split('T')[0]
           let taskDate = task.date
           if(formattedDate === taskDate){
             taskHeader.innerText = `Tasks for the day: ${taskDate}`
-            let taskDesc = task.description
-            let taskName = task.taskname
-            let taskPom = task.pomodoro
-            let taskId = task.id
-            let taskStatus = task.status
-            renderList(taskName, taskDesc, taskId, taskDate, taskPom, taskStatus)
+            renderList(task)
              } 
         })   
     }
 
-    const renderList = (taskName, taskDesc, taskId, taskDate, taskPom, taskStatus) => {
+    const renderList = (task) => {
         const taskLi = document.createElement("li")
+        const { taskPom, taskId, taskStatus, taskDesc, taskName } = task 
         taskLi.className = "taskli"
         taskLi.dataset.pomodoro = taskPom
         taskLi.dataset.id = taskId
         taskLi.dataset.status = taskStatus
         taskLi.dataset.description = taskDesc
         taskLi.innerText = `${taskName} - ${taskDesc} (${taskPom} 🍅)`
-        if (taskLi.dataset.status === "true") { //completed
-          // debugger
+        if (taskStatus === "true"){
           let text = taskLi.textContent
           taskLi.textContent = text + "  ✅"
         }
@@ -87,16 +65,14 @@ document.addEventListener("DOMContentLoaded", e => {
     }
 
     const renderTable = (tasks) => { //table for last 7 days
-      document.querySelectorAll('.day')[0].innerText = createDate(0)
-      document.querySelectorAll('.day')[1].innerText = createDate(-1)
-      document.querySelectorAll('.day')[2].innerText = createDate(-2)
-      document.querySelectorAll('.day')[3].innerText = createDate(-3)
-      document.querySelectorAll('.day')[4].innerText = createDate(-4)
-      document.querySelectorAll('.day')[5].innerText = createDate(-5)
-      document.querySelectorAll('.day')[6].innerText = createDate(-6)
-        if (document.querySelector(".chart").querySelector("li")){
-          document.querySelector(".chart").querySelector("li").remove()
-        }
+        document.querySelectorAll('.day')[0].innerText = createDate(-1)
+        document.querySelectorAll('.day')[1].innerText = createDate(-2)
+        document.querySelectorAll('.day')[2].innerText = createDate(-3)
+        document.querySelectorAll('.day')[3].innerText = createDate(-4)
+        document.querySelectorAll('.day')[4].innerText = createDate(-5)
+        document.querySelectorAll('.day')[5].innerText = createDate(-6)
+        document.querySelectorAll('.day')[6].innerText = createDate(-7)
+
         document.querySelectorAll(".day").forEach( day => {
           let date = day.innerText
           let formattedDate = new Date(date).toISOString().split('T')[0]
@@ -113,21 +89,7 @@ document.addEventListener("DOMContentLoaded", e => {
           }
           day.nextElementSibling.innerText = "🍅".repeat(sum)
       })
-      let table = document.querySelector(".chart")
-      avgLi = document.createElement("li")
-      avgLi.textContent = `Daily average: ${parseInt(dailyPomAvg())} minutes`
-      table.append(avgLi)
-    }
 
-    const dailyPomAvg = () => {
-    let avg = (document.querySelectorAll('.day')[0].nextElementSibling.textContent.length +
-    document.querySelectorAll('.day')[1].nextElementSibling.textContent.length +
-    document.querySelectorAll('.day')[2].nextElementSibling.textContent.length +
-    document.querySelectorAll('.day')[3].nextElementSibling.textContent.length +
-    document.querySelectorAll('.day')[4].nextElementSibling.textContent.length +
-    document.querySelectorAll('.day')[5].nextElementSibling.textContent.length +
-    document.querySelectorAll('.day')[6].nextElementSibling.textContent.length)/2*25/7
-    return avg
     }
 
     const createDate = (daysToAdd) => {
@@ -141,8 +103,6 @@ document.addEventListener("DOMContentLoaded", e => {
       return someFormattedDate
     }
 
-// Focus Mode >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    // const timerHandler = () => {
         
         const FULL_DASH_ARRAY = 283;
         const WARNING_THRESHOLD = 10;
@@ -163,7 +123,8 @@ document.addEventListener("DOMContentLoaded", e => {
         };
         //upon click on taskLi, the time is set to taskpom * 1500
         // const TIME_LIMIT = parseInt(document.querySelector("#node2").dataset.pom)*1500
-        const TIME_LIMIT = 1500
+        const TIME_LIMIT = 1500 
+        // let TIME_LIMIT = pomTimeConverter; 
         let timePassed = 0;
         let timeLeft = TIME_LIMIT;
         let timerInterval = null;
@@ -339,14 +300,10 @@ document.addEventListener("DOMContentLoaded", e => {
           startBtn.dataset.name = taskName
           let completedBtn = document.createElement("button")
           completedBtn.className = "complete-btn"
-          completedBtn.textContent = "Done!"
+          completedBtn.textContent = "Completed!"
           completedBtn.dataset.id = taskId
           completedBtn.dataset.status = taskStatus
-          let backBtn = document.createElement("button")
-          backBtn.className = "back-btn"
-          backBtn.textContent = "⬅ Go Back"
           baseTimer.append(completedBtn)
-          parentTimerDiv.append(backBtn)
           document.querySelector("#node2").dataset.pom = e.target.dataset.pomodoro
         }
           if (e.target === document.querySelector(".start-btn")){
@@ -354,13 +311,6 @@ document.addEventListener("DOMContentLoaded", e => {
             let taskPom = e.target.dataset.pom
             let taskName = e.target.name
             startTimer(taskId, taskPom, taskName);
-          }
-          if (e.target === document.querySelector(".back-btn")){
-              parentTimerDiv.style.display = "none"   //hide
-              timerName.style.display = "none"
-              parentDiv.style.display = "block"    //show
-              createTaskDiv.style.display = "block"
-              getTasks()
           }
           if (e.target === document.querySelector(".complete-btn")) {
             let taskId = e.target.dataset.id
@@ -398,14 +348,6 @@ document.addEventListener("DOMContentLoaded", e => {
 
     document.addEventListener("submit", e => {
         e.preventDefault()
-        if(e.target === loginForm){
-            // debugger
-            
-            USERNAME = document.querySelector("#login-form")[0].value
-            welcomeDiv.textContent = `Welcome back - ${USERNAME}`
-            overlay.style.display = "none"
-            loginForm.style.display = "none" //hide
-        }
         if (e.target === taskForm){
             let taskName = document.querySelector('[name=task-name]').value
             let taskDate = document.querySelector('[name=date]').value
@@ -452,6 +394,8 @@ To-do:
 
 - fix the timer to reflect number of pomodoros
 - fix the calendar to view different months
+- Logo/title (CSS)
+- hover effect
 - add new task to iCal
 -format form
 
