@@ -85,7 +85,7 @@ button.complete-btn {
     position: absolute;
 	transform: translate(5px, 5px);
     font-size: x-large;
-	
+	margin-left: 200px;
 }
 
 button.start-btn {
