@@ -1,18 +1,109 @@
-/* #node1
-{
-	background-color: #BAE568;
-	height: 50px;
-	width: 100%;
-	margin-bottom: 50px;
+
+.login-container{
+	/* display: flex; */
+	position: relative; 
 	text-align: center;
-	font-size: large; 
-} */
+	/* justify-content: center; */
+	height: 120px;
+	/* width: 400px; */
+	left: 0%; 
+	top: 200px; 
+	bottom: 50%;
+	background-color: white;
+	opacity: 0.85;
+}
+
+#overlay {
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	/* background-color: rgba(0, 0, 0, 0.7); */
+	background-image: url("https://images.unsplash.com/photo-1598540892016-58697e3ebd1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2064&q=80");
+	background-position: center;
+	background-repeat: no-repeat;
+	display: block;
+	opacity: 0.85;
+  }
+
+#node2
+{	color: white;
+	font-weight: bold;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
 #full-page
 {
 	padding: 10px;
-	background-image: url("https://images.unsplash.com/photo-1598540892016-58697e3ebd1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=478&q=80");
+	/* background-image: url("https://imgur.com/MvBEpGx"); */
+	background-image: url("https://images.unsplash.com/photo-1598540892016-58697e3ebd1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2064&q=80");
+	
+	/* width: 100vh; */
+	color: black;
+	background-position: center;
 	background-repeat: no-repeat;
 }
+
+.taskli:hover{
+	border: 1px solid;
+	box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+	outline-color: rgba(255, 255, 255, 0);
+	outline-offset: 15px;
+	text-shadow: 1.0px 1.0px 1px #427388;
+	border-radius: 5px;
+}
+
+.calendar-date:hover{
+	background: #666;
+	border: 1px solid;
+	box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
+	outline-color: rgba(255, 255, 255, 0);
+	outline-offset: 15px;
+	text-shadow: 1.0px 1.0px 1px #427388;
+	border-radius: 5px;
+  }
+
+#base-timer-label{
+	color: white;
+	font-weight: bold;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.timer-name
+{
+	background-color: white;
+	opacity: 0.6;
+}
+
+.timer-description
+{
+	background-color: white;
+	opacity: 0.6;
+}
+
+button.complete-btn {
+    position: absolute;
+	transform: translate(5px, 5px);
+    font-size: x-large;
+	margin-left: 200px;
+}
+
+button.start-btn {
+    transform: translate(5px, 5px);
+	margin-right: 10px;
+    font-size: x-large;
+	
+}
+
+button.back-btn {
+    transform: translate(50px, 50px);
+	margin-right: 10px;
+    font-size: medium
+	
+}
+
+
+
 #node2
 {
 	height: 50px;
@@ -31,9 +122,10 @@
 #parent
 {
 	display: flex;
-	background-color: #fff;
-	opacity: 0.7;
+	/* background-color: #fff; */
+	opacity: 0.8;
 	border-radius: 15px;
+	background-color: #fff;
 
 }
 /* #parentCal 
@@ -61,6 +153,7 @@
 	flex-wrap: wrap;
 	justify-content: center;
 	align-content: center;
+	background-color: #fff;
 }
 #calMonth
 {
@@ -70,15 +163,12 @@
 	background-color: #fff;
 	margin-bottom: 50px;
 }
-#calMonth:hover
-{
-	opacity: 1.0;
-}
+
 #node8
 {
 	grid-area: calendar;
 	width: 400px;
-	height: 300px;
+	height: 260px;
 	background-color: #fff;
 	margin-bottom: 25px;
 	border-radius: 15px;
@@ -91,19 +181,20 @@
 	/* background-color: #BAE568; */
 	height: 50px;
 }
-#node10
+#node10  /* middle column - task box */
 {
 	grid-area: MyTasks;
-	height: 300px;
+	height: 260px;
 	background-color: #fff;
 	align-self: center;
+	/* justify-self: baseline; */
 	border-radius: 15px;
 	opacity: 0.6;
 }
 #node11
 {
 	grid-area: productivity;
-	height: 300px;
+	height: 260px;
 	background-color: #fff;
 	border-radius: 15px;
 	opacity: 0.6;
@@ -126,12 +217,26 @@
 	align-self: flex-end;
 	justify-content: center;
 }
-.container 
+
+.container /* container for .add-task-form */
 {
+	width: 450px;
 	padding: 10px;
 	margin-left: 600px;
 	margin-right: 400px;
+	background-color: #fff;
+	border-radius: 15px;
+	/* opacity: 0.6; */
 }
+
+.add-task-form /* container for .add-task-form */
+{
+	width: 400px;
+	background-color: #fff;
+	border-radius: 15px;
+	opacity: 0.6;
+}
+
 .app
 {
 	display: flex;
@@ -215,9 +320,9 @@
   /*
   FOCUS LOGO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   */
-  body {
-	background: #72b565;
-  }
+  /* body { */
+	/* background: #72b565; */
+  /* } */
   .wrapper {
 	margin-left: 30px;
 	height: 50px;
@@ -277,3 +382,28 @@
 	  transform: translateX(-170px);
 	}
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

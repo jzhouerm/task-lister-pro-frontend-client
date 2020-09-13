@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", e => {
     const overlay = document.querySelector("#overlay")
     const loginForm = document.querySelector("#login-form")
     const appDiv = document.createElement("div")
-    let USERNAME = ""
+    let USERNAME;
     const welcomeDiv = document.getElementById("node2")
     parentTimerDiv.style.display = "none"  
     let backBtn = document.createElement("button")
@@ -169,8 +169,8 @@ document.addEventListener("DOMContentLoaded", e => {
           }
         };
         //upon click on taskLi, the time is set to taskpom * 1500
-        // let TIME_LIMIT = parseInt(document.querySelector("#node2").dataset.pom)*1500
-        let TIME_LIMIT = 1500
+        let TIME_LIMIT = parseInt(document.querySelector("#node2").dataset.pom)*1500
+        // let TIME_LIMIT = 1500
         let timePassed = 0;
         let timeLeft = TIME_LIMIT;
         let timerInterval = null;
@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", e => {
           parentTimerDiv.append(appDiv)
           
           timerName.textContent = "Current Task:"
-          timerDesc.textContent = ` • ${e.target.dataset.description}`  
+          timerDesc.textContent = ` • ${e.target.dataset.description}`   
           parentTimerDiv.style.display = "block"                    
           parentDiv.style.display = "none"
           appDiv.innerHTML = `
@@ -480,7 +480,6 @@ To-do:
 - fix the timer to reflect number of pomodoros
 - fix the calendar to view different months
 - add new task to iCal
-- format form
-- set validations
+-format form
 
 */
