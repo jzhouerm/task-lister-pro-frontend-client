@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", e => {
     let addTask = true;
 
     const taskUrl = "http://localhost:3000/tasks/"
-    // const userUrl = "http://localhost:3000/users/1"
+    const userUrl = "http://localhost:3000/users/1"
     const taskForm = document.querySelector(".add-task-form") //reset form
     const addBtn = document.querySelector("#new-task-btn")
     const taskFormContainer = document.querySelector(".container");
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", e => {
       backBtn.className = "back-btn"
       backBtn.textContent = "⬅ Go Back"
       parentTimerDiv.append(backBtn)    
-          
+
 
     const getTasks = () => {
         fetch(taskUrl)
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", e => {
         listTitleUl.innerHTML = ""
         //tasks.filter then forEach (map in react)
         tasks.forEach(task => {
-          let clickedDate = `2020-09-${date}`
+          let clickedDate = `2020-11-${date}`
           let formattedDate = new Date(clickedDate).toISOString().split('T')[0]
           let taskDate = task.date
           if(formattedDate === taskDate){
@@ -469,7 +469,7 @@ document.addEventListener("DOMContentLoaded", e => {
 
 //invoke functions
 getTasks()
-createCalendar(calendarDiv, 2020, 9);
+createCalendar(calendarDiv, 2020, 11);
 
 
 })//end of DOMContentLoaded
@@ -483,4 +483,15 @@ To-do:
 - format form
 - set validations
 
+***Update month in createCalendar function and update seeds to reflect current month
+
+Backend
+1) run rails db:migrate
+2) run rails db:seed
+3) run rails s
+
+Front end
+4) open index.js
+
 */
+
