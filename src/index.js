@@ -1,6 +1,9 @@
+// const moment = require('moment')
+// import moment from 'moment'
+
 document.addEventListener("DOMContentLoaded", e => {
     let addTask = true;
-
+    const month = moment(new Date()).format("L").split('/')[0]
     const taskUrl = "http://localhost:3000/tasks/"
     const userUrl = "http://localhost:3000/users/1"
     const taskForm = document.querySelector(".add-task-form") //reset form
@@ -18,7 +21,9 @@ document.addEventListener("DOMContentLoaded", e => {
     const overlay = document.querySelector("#overlay")
     const loginForm = document.querySelector("#login-form")
     const appDiv = document.createElement("div")
+    const calTitle = document.querySelector(".current-month")
     let USERNAME = ""
+    let CLICKEDDATE
     const welcomeDiv = document.getElementById("node2")
     parentTimerDiv.style.display = "none"  
     let backBtn = document.createElement("button")
@@ -32,6 +37,15 @@ document.addEventListener("DOMContentLoaded", e => {
         .then(response => response.json())
         .then(tasks => initialRenderTasks(tasks))
     }
+
+    const getUpdatedTasks = (taskDate) => {
+      let currentDate = localStorage.getItem('clickedDate').split('-')[2]
+      fetch(taskUrl)
+      .then(response => response.json())
+      .then(tasks => {
+        // debugger
+        renderCalendarTasks(tasks, currentDate)})
+  }
     
     const initialRenderTasks = (tasks) => {
         renderTable(tasks)
@@ -44,10 +58,15 @@ document.addEventListener("DOMContentLoaded", e => {
           let taskId = task.id
           let taskStatus = task.status
           // let today = new Date().toISOString().split('T')[0]
-          let today = createDate(0)
-          let formattedDate = new Date(today).toISOString().split('T')[0]
-          taskHeader.innerText = `Tasks for the day: ${formattedDate}`
-            if(formattedDate === taskDate){
+          let today = new Date ()
+
+          // let formattedDate = new Date(today).toISOString().split('T')[0]
+          // taskHeader.innerText = `Tasks for the day: ${formattedDate}`
+          // taskHeader.innerText = `Tasks for the day: ${moment(today).format("MMMM Do YYYY")}`
+          taskHeader.innerText = `Tasks for the day: ${moment(today).format("L")}`
+
+          // debugger
+            if(moment(today).format("MMMM Do YYYY") === moment(taskDate).format("MMMM Do YYYY")){
             renderList(taskName, taskDesc, taskId, taskDate, taskPom, taskStatus)
             } 
         }   
@@ -55,11 +74,14 @@ document.addEventListener("DOMContentLoaded", e => {
 
     const renderCalendarTasks = (tasks, date) => {
         //find the date selected and render tasks
+        renderTable(tasks)
         listTitleUl.innerHTML = ""
         //tasks.filter then forEach (map in react)
         tasks.forEach(task => {
-          let clickedDate = `2020-11-${date}`
-          let formattedDate = new Date(clickedDate).toISOString().split('T')[0]
+          // let month = moment(new Date()).format("L").split('/')[0]
+          let CLICKEDDATE = `2020-${month}-${date}`
+          localStorage.setItem('clickedDate', CLICKEDDATE)
+          let formattedDate = new Date(CLICKEDDATE).toISOString().split('T')[0]
           let taskDate = task.date
           if(formattedDate === taskDate){
             taskHeader.innerText = `Tasks for the day: ${taskDate}`
@@ -69,7 +91,7 @@ document.addEventListener("DOMContentLoaded", e => {
             let taskId = task.id
             let taskStatus = task.status
             renderList(taskName, taskDesc, taskId, taskDate, taskPom, taskStatus)
-             } 
+            } 
         })   
     }
 
@@ -93,6 +115,19 @@ document.addEventListener("DOMContentLoaded", e => {
         deleteBtn.className = "delete-task"
         // deleteBtn.dataset.id = taskLi.dataset.id
         taskLi.append(deleteBtn)
+            //add event listener for delete. will re-render tasks for the date
+            document.addEventListener("click", e => {
+              if (e.target.className === "delete-task"){
+                // debugger
+                let taskId = parseInt(e.target.parentNode.dataset.id)
+                fetch(taskUrl+taskId, {method: "DELETE"})
+                .then(response => response.json())
+                .then(data => {
+                  // debugger
+                  getUpdatedTasks(taskDate)
+                })
+              }
+            })
     }
 
     const renderTable = (tasks) => { //table for last 7 days
@@ -170,7 +205,8 @@ document.addEventListener("DOMContentLoaded", e => {
         };
         //upon click on taskLi, the time is set to taskpom * 1500
         // let TIME_LIMIT = parseInt(document.querySelector("#node2").dataset.pom)*1500
-        let TIME_LIMIT = 1500
+        // let pomodoros = document.querySelector('.taskli') ? parseInt(document.querySelector('.taskli').dataset.pomodoro) : 2
+        let TIME_LIMIT 
         let timePassed = 0;
         let timeLeft = TIME_LIMIT;
         let timerInterval = null;
@@ -200,8 +236,9 @@ document.addEventListener("DOMContentLoaded", e => {
             document.getElementById("base-timer-label").innerHTML = formatTime(
               timeLeft
             );
+            let pomNum = parseInt(document.querySelector('#node2').dataset.pom)
             setCircleDasharray();
-            setRemainingPathColor(timeLeft);
+            setRemainingPathColor(timeLeft * pomNum);
             console.log(timeLeft);
             if (timeLeft === 0) {
               onTimesUp();
@@ -241,11 +278,12 @@ document.addEventListener("DOMContentLoaded", e => {
             .getElementById("base-timer-path-remaining")
             .setAttribute("stroke-dasharray", circleDasharray);
         }
+        
 
 //Calendar >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     function createCalendar(elem, year, month) { 
-
-        let mon = month - 1; // months in JS are 0..11, not 1..12
+        calTitle.innerText = `${moment(new Date()).format("MMMM")} ${moment(new Date()).format("YYYY")}`
+        let mon = month; // months in JS are 0..11, not 1..12
         let d = new Date(year, mon);
   
         let table = '<table align="center" class="calendar" width="400" height="250" border="1"><tr><th>MO</th><th>TU</th><th>WE</th><th>TH</th><th>FR</th><th>SA</th><th>SU</th></tr><tr>';
@@ -293,14 +331,16 @@ document.addEventListener("DOMContentLoaded", e => {
    document.addEventListener("click", e => {
         if(e.target.className === "calendar-date"){
             
-            let clickedDate = e.target.innerText
+            let CLICKEDDATE = e.target.innerText
             
             fetch(taskUrl)
             .then(response => response.json())
-            .then(tasks => renderCalendarTasks(tasks, clickedDate))
+            .then(tasks => renderCalendarTasks(tasks, CLICKEDDATE))
         }
         
         if(e.target.className === "taskli" && e.target.dataset.status === "false"){
+          let pomodoros = parseInt(e.target.dataset.pomodoro)
+          // let TIME_LIMIT = 1500 * pomodoros
           createTaskDiv.style.display = "none"
           appDiv.className = "app"
           parentTimerDiv.append(appDiv)
@@ -329,7 +369,7 @@ document.addEventListener("DOMContentLoaded", e => {
                 </g>
               </svg>
               <span id="base-timer-label" class="base-timer__label">${formatTime(
-                TIME_LIMIT
+                TIME_LIMIT = 1500 * pomodoros
               )}</span>
             </div>
             `;
@@ -356,10 +396,11 @@ document.addEventListener("DOMContentLoaded", e => {
           document.querySelector("#node2").dataset.pom = e.target.dataset.pomodoro
         }
           if (e.target === document.querySelector(".start-btn")){
-            document.querySelector(".start-btn").disabled = true
             let taskId = e.target.dataset.id
             let taskPom = e.target.dataset.pom
             let taskName = e.target.name
+            TIME_LIMIT = 1500 * taskPom
+            document.querySelector(".start-btn").disabled = true
             startTimer(taskId, taskPom, taskName);
           }
           if (e.target === document.querySelector(".back-btn")){
@@ -400,15 +441,15 @@ document.addEventListener("DOMContentLoaded", e => {
               getTasks()
             })
           }
-          if (e.target.className === "delete-task"){
-            // debugger
-            let taskId = parseInt(e.target.parentNode.dataset.id)
-            fetch(taskUrl+taskId, {method: "DELETE"})
-            .then(response => response.json())
-            .then(data => {
-              getTasks()
-            })
-          }
+          // if (e.target.className === "delete-task"){
+          //   // debugger
+          //   let taskId = parseInt(e.target.parentNode.dataset.id)
+          //   fetch(taskUrl+taskId, {method: "DELETE"})
+          //   .then(response => response.json())
+          //   .then(data => {
+          //     getTasks()
+          //   })
+          // }
           
       })
 
@@ -469,7 +510,7 @@ document.addEventListener("DOMContentLoaded", e => {
 
 //invoke functions
 getTasks()
-createCalendar(calendarDiv, 2020, 11);
+createCalendar(calendarDiv, 2020, month);
 
 
 })//end of DOMContentLoaded
@@ -477,7 +518,7 @@ createCalendar(calendarDiv, 2020, 11);
 /*
 To-do:
 
-- fix the timer to reflect number of pomodoros
+- re-render the tasks for the same day after deleting a task
 - fix the calendar to view different months
 - add new task to iCal
 - format form
