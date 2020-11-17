@@ -510,13 +510,10 @@ document.addEventListener("DOMContentLoaded", e => {
 getTasks()
 createCalendar(calendarDiv, 2020, month);
 
-
 })//end of DOMContentLoaded
 
 /*
 To-do:
-
-- re-render the tasks for the same day after deleting a task
 - fix the calendar to view different months
 - add new task to iCal
 - format form
