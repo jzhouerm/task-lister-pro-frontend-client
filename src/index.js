@@ -326,8 +326,6 @@ document.addEventListener("DOMContentLoaded", e => {
     }
 
 //Event listeners >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    
-
    document.addEventListener("click", e => {
         if(e.target.className === "calendar-date"){
             
