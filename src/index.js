@@ -203,7 +203,6 @@ document.addEventListener("DOMContentLoaded", e => {
             threshold: ALERT_THRESHOLD
           }
         };
-        //upon click on taskLi, the time is set to taskpom * 1500
         let TIME_LIMIT 
         let timePassed = 0;
         let timeLeft = TIME_LIMIT;
