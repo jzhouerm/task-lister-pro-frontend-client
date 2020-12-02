@@ -200,7 +200,7 @@ document.addEventListener("DOMContentLoaded", e => {
           },
           alert: {
             color: "red",
-            threshold: ALERT_THRESHOLD
+            // threshold: ALERT_THRESHOLD
           }
         };
         //upon click on taskLi, the time is set to taskpom * 1500
