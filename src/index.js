@@ -529,7 +529,6 @@ Front end
 4) open index.js
 4) open index.js
 4) open index.js
-4) open index.js
 
 
 */
