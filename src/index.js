@@ -510,6 +510,7 @@ getTasks()
 createCalendar(calendarDiv, 2020, month);
 
 })
+//end of DOMContentLoaded
 
 /*
 To-do:
